@@ -22,12 +22,19 @@ public class JweMoreExamples {
 
         System.out.println(jwe);
 
-        Jwe<Claims> jjwe = Jwts.parser()
+
+
+
+        System.out.println(getClaim(jwe, "Username", secretKey));
+    }
+
+    private static String getClaim(String authToken, String nameClaim, SecretKey secretKey){
+        Claims payload = Jwts.parser()
                 .decryptWith(secretKey)
                 .build()
-                .parseEncryptedClaims(jwe);
+                .parseEncryptedClaims(authToken)
+                .getPayload();
 
-
-        System.out.println(jjwe.getPayload());
+        return payload.get(nameClaim).toString();
     }
 }
